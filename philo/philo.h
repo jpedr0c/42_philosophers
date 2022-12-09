@@ -30,8 +30,8 @@ typedef struct s_philo
   unsigned long time;
   int ate;
   int id;
-  pthread mutex_t *mutex;
-  pthread mutex_t *print;
+  pthread_mutex_t *mutex;
+  pthread_mutex_t *print;
   unsigned long last_meal;
 }t_philo;
 
