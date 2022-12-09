@@ -93,8 +93,8 @@ int init_params(t_philo *philo)
   while (i < philo->num_philo)
     if (pthread_mutex_init(&m[i++], 0))
       return (free_params(philo, m));
-    if (pthread_mutex_init(&pr, 0))
-      return (free_params(philo, m));
-    assign_params(philo, m, &pr);
-    return (0);
+  if (pthread_mutex_init(&pr, 0))
+    return (free_params(philo, m));
+  assign_params(philo, m, &pr);
+  return (0);
 }
