@@ -69,12 +69,12 @@ $(OBJF):
 clean:
 			@$(RM) -r $(OBJ_DIR)
 			@$(RM) $(OBJF)
-			@echo -e -n "$(MAGENTA)[PUSH_SWAP]:$(SET_COLOR)$(BLUE) Object files$(SET_COLOR)$(GREEN)  => Cleaned$(SET_COLOR)"
+			@echo -e -n "$(MAGENTA)[PHILOSOPHERS]:$(SET_COLOR)$(BLUE) Object files$(SET_COLOR)$(GREEN)  => Cleaned$(SET_COLOR)"
 			@echo -e " 🗑️$(SET_COLOR)"
 
 fclean:		clean
 			@$(RM) $(NAME)
-			@echo -e -n "$(MAGENTA)[SO_LONG]:$(SET_COLOR)$(BLUE) Executable files$(GREEN)  => Cleaned$(SET_COLOR)"
+			@echo -e -n "$(MAGENTA)[PHILOSOPHERS]:$(SET_COLOR)$(BLUE) Executable files$(GREEN)  => Cleaned$(SET_COLOR)"
 			@echo -e " 🗑️$(SET_COLOR)"
 
 re:		fclean all

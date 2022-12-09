@@ -81,11 +81,11 @@ int main(int argc, char **argv)
   t_philo *philo;
   pthread_t *th;
 
-  if (argc < c || argc < 6)
+  if (argc < 5 || argc < 6)
     return (error());
   philo = (t_philo *)malloc(sizeof(t_philo) * philo->num_philo);
   if (config_params(philo, argv))
-    return (free_params(0, 0, philo));
+    return (free_params(0, philo));
   if (init_params(philo))
     return (1);
   th = (pthread_t *)malloc(sizeof(pthread_t) * philo->num_philo);
