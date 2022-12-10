@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     return (error());
   memory = (t_philo *)malloc(sizeof(t_philo) * philo->num_philo);
   if (config_params(philo, argv))
-    return (free_params(0, philo));
+    return (free_params(0, memory));
   if (init_params(philo))
     return (1);
   th = (pthread_t *)malloc(sizeof(pthread_t) * philo->num_philo);
