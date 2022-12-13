@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 19:16:22 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/13 18:29:38 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:52:52 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	*routine_of_philo(void *p)
 		pthread_mutex_lock(&philo->mutex[philo->id % philo->var->num_philo]);
 		print(philo, real_time(philo), "has taken a fork");
 		print(philo, real_time(philo), "is eating");
-		// philo->last_meal = current_time_in_ms() - philo->var->start;
-		// printf("tempo %lu \n", philo->last_meal);
 		philo->ate++;
 		if (philo->ate == philo->var->must_eat)
 			philo->var->total_ate++;
@@ -63,7 +61,8 @@ void	check_all_philo_ate(t_philo *philo, t_const_philo *var)
 			free_params(philo, philo->mutex, var);
 			return ;
 		}
-		if (current_time_in_ms() - philo[i].last_meal > (unsigned long)philo->var->time_die)
+		if (current_time_in_ms()
+			- philo[i].last_meal > (unsigned long)philo->var->time_die)
 		{
 			usleep(100);
 			pthread_mutex_lock(philo->print);
@@ -79,10 +78,10 @@ void	check_all_philo_ate(t_philo *philo, t_const_philo *var)
 
 int	main(int argc, char **argv)
 {
-	int			i;
-	t_philo		*philo;
-	t_const_philo		*var;
-	pthread_t	*th;
+	int				i;
+	t_philo			*philo;
+	t_const_philo	*var;
+	pthread_t		*th;
 
 	if (argc != 5 && argc != 6)
 		return (error());
