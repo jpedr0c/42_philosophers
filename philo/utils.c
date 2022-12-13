@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocardos <jocardos@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:31 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/08 15:49:31 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:19:15 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void  destroy_mutex(t_philo *philo)
 {
   int i;
 
-  i = 0
-  while (i < philo->num_philo)
+  i = 0;
+  while (i < philo->var->num_philo)
     pthread_mutex_destroy(&philo->mutex[i++]);
 }
 
@@ -69,5 +69,5 @@ unsigned long current_time_in_ms(void)
 
 unsigned long real_time(t_philo *philo)
 {
-  return (current_time_in_ms() - philo->time);
+  return (current_time_in_ms() - philo->var->time);
 }

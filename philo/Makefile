@@ -6,13 +6,13 @@
 #    By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/08 11:23:57 by jocardos          #+#    #+#              #
-#    Updated: 2022/09/23 16:07:03 by jocardos         ###   ########.fr        #
+#    Updated: 2022/12/13 17:23:13 by jocardos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL			= /bin/bash
 
-NAME				= philosophers
+NAME				= philo
 OBJ_DIR			= object/
 CC					= gcc
 CFLAGS			= -Wall -Werror -Wextra -g
