@@ -27,7 +27,7 @@ void short_sleep(unsigned long time, t_philo *philo)
   struct timeval time_before;
   struct timeval time_now;
 
-  gettimeofday(&time, before, NULL);
+  gettimeofday(&time_before, NULL);
   before = current_time_in_ms(time_before);
   while (!(philo->var->end))
   {
