@@ -56,7 +56,7 @@ void	destroy_mutex(t_philo *philo)
 unsigned long	current_time_in_ms(void)
 {
 	struct timeval	time;
-	unsigned long	l;
+	unsigned long	int l;
 	unsigned long	s;
 	unsigned long	u;
 
