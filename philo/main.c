@@ -21,9 +21,9 @@ void	print(t_philo *philo, unsigned long time, char *is_doing)
 
 void short_sleep(unsigned long time, t_philo *philo)
 {
-  unsigned long start;
+  long unsigned int start;
   unsigned long time_diff;
-  unsigned long before;
+  long unsigned int before;
   struct timeval time_before;
   struct timeval time_now;
 
