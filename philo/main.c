@@ -28,11 +28,13 @@ void short_sleep(unsigned long time, t_philo *philo)
   struct timeval time_now;
 
   gettimeofday(&time_before, NULL);
-  before = current_time_in_ms(time_before);
+  time_before = current_time_in_ms();
+  before = time_before;
   while (!(philo->var->end))
   {
     gettimeofday(&time_now, NULL);
-    start = current_time_in_ms(time_now);
+    time_now = current_time_in_ms();
+    start = time_now;
     time_diff = start - before;
     if (time_diff >= time)
       break ;
