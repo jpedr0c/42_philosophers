@@ -19,13 +19,34 @@ void	print(t_philo *philo, unsigned long time, char *is_doing)
 	pthread_mutex_unlock(philo->print);
 }
 
+void short_sleep(unsigned long time, t_philo *philo)
+{
+  unsigned long start;
+  unsigned long time_diff;
+  unsigned long before;
+  struct timeval time_before;
+  struct timeval time_now;
+
+  gettimeofday(&time, before, NULL);
+  before = current_time_in_ms(time_before);
+  while (!(philo->var->end))
+  {
+    gettimeofday(&time_now, NULL);
+    start = current_time_in_ms(time_now);
+    time_diff = start - before;
+    if (time_diff >= time)
+      break ;
+    usleep(50);
+  }
+}
+
 void	*routine_of_philo(void *p)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 0)
-		usleep(10);
+		usleep(philo->var->time_eat * 1000);
 	philo->last_meal = current_time_in_ms();
 	while (42)
 	{
@@ -37,12 +58,12 @@ void	*routine_of_philo(void *p)
 		philo->ate++;
 		if (philo->ate == philo->var->must_eat)
 			philo->var->total_ate++;
-		usleep(philo->var->time_eat * 1000);
+    short_sleep(philo->var->time_eat, philo);
 		philo->last_meal = current_time_in_ms();
 		pthread_mutex_unlock(&philo->mutex[philo->id - 1]);
 		pthread_mutex_unlock(&philo->mutex[philo->id % philo->var->num_philo]);
 		print(philo, real_time(philo), "is sleeping");
-		usleep(philo->var->time_sleep * 1000);
+    short_sleep(philo->var->time_sleep, philo);
 		print(philo, real_time(philo), "is thinking");
 	}
 	return (0);
@@ -57,6 +78,7 @@ void	check_all_philo_ate(t_philo *philo, t_const_philo *var)
 	{
 		if (philo[i].var->total_ate == philo[i].var->num_philo)
 		{
+      philo->var->end = 1;
 			destroy_mutex(philo);
 			free_params(philo, philo->mutex, var);
 			return ;
@@ -65,6 +87,7 @@ void	check_all_philo_ate(t_philo *philo, t_const_philo *var)
 			- philo[i].last_meal > (unsigned long)philo->var->time_die)
 		{
 			usleep(100);
+      philo->var->end = 1;
 			pthread_mutex_lock(philo->print);
 			printf("%lums  %d died\n", real_time(philo), philo->id);
 			destroy_mutex(philo);
@@ -72,7 +95,7 @@ void	check_all_philo_ate(t_philo *philo, t_const_philo *var)
 			return ;
 		}
 		i = (i + 1) % var->num_philo;
-		usleep(500);
+		usleep(100);
 	}
 }
 

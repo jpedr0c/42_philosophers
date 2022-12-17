@@ -27,6 +27,7 @@ typedef struct s_const_philo
 	int				time_sleep;
 	int				must_eat;
 	int				total_ate;
+	int				end;
 	unsigned long	time;
 	unsigned long	start;
 }					t_const_philo;
