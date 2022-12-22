@@ -6,18 +6,30 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:03:42 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/13 18:50:58 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:15:10 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <pthread.h>
 # include <sys/time.h>
-# include <unistd.h>
+
+typedef struct s_philo
+{
+	int				id;
+	int				ate;
+	int				left_fork;
+	int				right_fork;
+	long long		last_meal;
+	pthread_t		thread_id;
+	struct s_const_philo	*var;
+}					t_philo;
 
 typedef struct s_const_philo
 {
@@ -25,42 +37,37 @@ typedef struct s_const_philo
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	int				must_eat;
+	int				nb_eat;
 	int				total_ate;
+	int				dieded;
 	int				end;
-	unsigned long	time;
-	unsigned long	start;
+	long long		first_time;
+	pthread_mutex_t	meal_check;
+	pthread_mutex_t	forks[200];
+	pthread_mutex_t	writing;
+	t_philo			philo[200];
 }					t_const_philo;
 
-typedef struct s_philo
-{
-	int				ate;
-	int				id;
-	t_const_philo	*var;
-	pthread_mutex_t	*mutex;
-	pthread_mutex_t	*print;
-	unsigned long	last_meal;
-}					t_philo;
 
 // UTILS
-int					error(void);
-int					ft_atoi(char *str);
-void				destroy_mutex(t_philo *philo);
-unsigned long		current_time_in_ms(void);
-unsigned long		real_time(t_philo *philo);
+int					ft_atoi(const char *str);
+long long			get_time_in_ms(void);
+long long			time_diff(long long pres, long long past);
+void 				smart_sleep(long long time, t_const_philo *var);
+void 				print_action(t_const_philo *var, int id, char *string);
 
 // CONFIG
-int					check_args(char **argv);
-int					config_params(t_const_philo *var, char **argv);
-void				assign_params(t_philo *philo, t_const_philo *var,
-						pthread_mutex_t *m, pthread_mutex_t *pr);
-int					free_params(t_philo *philo, pthread_mutex_t *m,
-						t_const_philo *var);
-int					init_params(t_philo *philo, t_const_philo *var);
+int	print_error(char *str);
+int manager_error(int error);
+int init_mutex(t_const_philo *var);
+int init_philosophers(t_const_philo *var);
+int init_all(t_const_philo *var, char **argv);
 
-// MAIN
-void				print(t_philo *philo, unsigned long time, char *is_doing);
-void				*routine_of_philo(void *p);
-void				check_all_philo_ate(t_philo *philo, t_const_philo *var);
+// ROUTINE
+void philo_eats(t_philo *philo);
+void *routine_of_philo(void *void_philo);
+void exit_routine(t_const_philo *var, t_philo *philo);
+void death_checker(t_const_philo *var, t_philo *philo);
+int create_routine(t_const_philo *var);
 
 #endif

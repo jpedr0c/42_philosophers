@@ -6,30 +6,22 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:31 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/13 18:52:16 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:20:44 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	error(void)
+int	ft_atoi(const char *str)
 {
-	printf("\e[31mError!!!\e[0m\n");
-	printf("\e[31mPlease enter: num_philo time_die time_eat time_sleep\e[0m\n");
-	return (1);
-}
-
-int	ft_atoi(char *str)
-{
-	int		signal;
-	long	result;
-	size_t	i;
+	int			signal;
+	long int	result;
+	size_t		i;
 
 	i = 0;
 	signal = 1;
 	result = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'
-			|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r'))
+	while (str[i] && (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -41,33 +33,44 @@ int	ft_atoi(char *str)
 		result = result * 10 + (str[i] - 48);
 		i++;
 	}
-	return (result * signal);
+	return ((int)(result * signal));
 }
 
-void	destroy_mutex(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->var->num_philo)
-		pthread_mutex_destroy(&philo->mutex[i++]);
-}
-
-unsigned long	current_time_in_ms(void)
+long long	get_time_in_ms(void)
 {
 	struct timeval	time;
-	long unsigned int l;
-	unsigned long	s;
-	unsigned long	u;
 
 	gettimeofday(&time, NULL);
-	s = (time.tv_sec * 1000);
-	u = (time.tv_usec / 1000);
-	l = s + u;
-	return (l);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-unsigned long	real_time(t_philo *philo)
+long long	time_diff(long long pres, long long past)
 {
-	return (current_time_in_ms() - philo->var->time);
+	return (pres - past);
+}
+
+void smart_sleep(long long time, t_const_philo *var)
+{
+	long long start;
+
+	start = get_time_in_ms();
+	while (!(var->dieded))
+	{
+		if (time_diff(get_time_in_ms(), start) >= time)
+			break ;
+		usleep(50);
+	}
+}
+
+void print_action(t_const_philo *var, int id, char *string)
+{
+	pthread_mutex_lock(&(var->writing));
+	if (!(var->dieded))
+	{
+		printf("%llims ", get_time_in_ms() - var->first_time);
+		printf("%i ", id + 1);
+		printf("%s\n ", string);
+	}
+	pthread_mutex_unlock(&(var->writing));
+	return ;
 }

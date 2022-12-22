@@ -6,7 +6,7 @@
 #    By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/08 11:23:57 by jocardos          #+#    #+#              #
-#    Updated: 2022/12/13 17:23:13 by jocardos         ###   ########.fr        #
+#    Updated: 2022/12/22 14:05:57 by jocardos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ WHITE			= \033[0;97m
 BG_GREEN	= \033[42;1;37m
 
 #Sources
-SRC_FILES			= config main utils 
+SRC_FILES			= utils config routine main
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
