@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:03:42 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:15:10 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:42:08 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_const_philo
 	int				nb_eat;
 	int				total_ate;
 	int				dieded;
-	int				end;
 	long long		first_time;
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	forks[200];

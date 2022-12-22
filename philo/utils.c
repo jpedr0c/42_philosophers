@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:31 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:20:44 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:35:45 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void smart_sleep(long long time, t_const_philo *var)
 {
 	long long start;
 
-	start = get_time_in_ms();
 	while (!(var->dieded))
 	{
-		if (time_diff(get_time_in_ms(), start) >= time)
+		start = get_time_in_ms();
+		if (time_diff(get_time_in_ms(), start) > time)
 			break ;
 		usleep(50);
 	}

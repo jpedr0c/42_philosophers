@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:42:08 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:18:07 by jocardos         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:54:20 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void philo_eats(t_philo *philo)
     philo->last_meal = get_time_in_ms();
     pthread_mutex_unlock(&(var->meal_check));
     smart_sleep(var->time_eat, var);
-    (var->nb_eat)++;
+    philo->ate++;
     pthread_mutex_unlock(&(var->forks[philo->left_fork]));
     pthread_mutex_unlock(&(var->forks[philo->right_fork]));
 }
@@ -87,7 +87,7 @@ void death_checker(t_const_philo *var, t_philo *philo)
             usleep(100);
         }
         if (var->dieded)
-            break ;
+            return ;
         i = 0;
         while(var->nb_eat != -1 && i < var->num_philo && philo[i].ate >= var->nb_eat)
             i++;
