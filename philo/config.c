@@ -16,7 +16,6 @@ int	print_error(char *str)
 {
 	printf("\e[31mError: \e[0m");
 	printf("\e[31m%s\e[0m\n", str);
-	printf("\e[31mPlease enter: num_philo time_die time_eat time_sleep\e[0m\n");
 	return (1);
 }
 
@@ -33,11 +32,11 @@ int init_mutex(t_const_philo *var)
 {
 	int i;
 
-	i = var->num_philo;
-	while (--i >= 0)
+	i = 0;
+	while (i < var->num_philo)
 	{
-		if (pthread_mutex_init(&(var->forks[i]), NULL))
-			return (1);
+		pthread_mutex_init(&(var->forks[i]), NULL);
+		i++;
 	}
 	if (pthread_mutex_init(&(var->writing), NULL))
 		return (1);
@@ -71,7 +70,8 @@ int init_all(t_const_philo *var, char **argv)
 	var->time_sleep = ft_atoi(argv[4]);
 	var->total_ate = 0;
 	var->dieded = 0;
-	if (var->num_philo < 2 || var->time_die < 0 || var->time_eat < 0 || var->time_sleep < 0 || var->num_philo > 250)
+	var->end = 0;
+	if (var->num_philo < 1 || var->time_die < 0 || var->time_eat < 0 || var->time_sleep < 0 || var->num_philo > 200)
 		return (1);
 	if (argv[5])
 	{

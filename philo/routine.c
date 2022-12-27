@@ -15,6 +15,7 @@
 void philo_eats(t_philo *philo)
 {
     t_const_philo *var;
+    struct timeval time_now;
 
     var = philo->var;
     pthread_mutex_lock(&(var->forks[philo->left_fork]));
@@ -23,7 +24,7 @@ void philo_eats(t_philo *philo)
     print_action(var, philo->id, "has taken a fork");
     pthread_mutex_lock(&(var->meal_check));
     print_action(var, philo->id, "is eating");
-    philo->last_meal = get_time_in_ms();
+    philo->last_meal = get_time_in_ms(time_now);
     pthread_mutex_unlock(&(var->meal_check));
     smart_sleep(var->time_eat, var);
     (philo->ate)++;
@@ -71,6 +72,7 @@ void exit_routine(t_const_philo *var, t_philo *philo)
 void death_checker(t_const_philo *var, t_philo *philo)
 {
      int i;
+     struct timeval time_now;
 
      while(!(var->total_ate))
      {
@@ -78,7 +80,7 @@ void death_checker(t_const_philo *var, t_philo *philo)
         while (++i < var->num_philo && !(var->dieded))
         {
             pthread_mutex_lock(&(var->meal_check));
-            if (time_diff(get_time_in_ms(), philo[i].last_meal) > var->time_die)
+            if (time_diff(get_time_in_ms(time_now), philo[i].last_meal) > var->time_die)
             {
                 print_action(var, i, "died");
                 var->dieded = 1;
@@ -100,15 +102,16 @@ int create_routine(t_const_philo *var)
 {
     int i;
     t_philo *philo;
+    struct timeval time_now;
 
     i = 0;
     philo = var->philo;
-    var->first_time = get_time_in_ms();
+    var->first_time = get_time_in_ms(time_now);
     while (i < var->num_philo)
     {
         if (pthread_create(&(philo[i].thread_id), NULL, routine_of_philo, &(philo[i])))
             return (1);
-        philo[i].last_meal = get_time_in_ms();
+        philo[i].last_meal = get_time_in_ms(time_now);
         i++;
     }
     death_checker(var, var->philo);

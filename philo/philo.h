@@ -42,6 +42,7 @@ typedef struct s_const_philo
 	int				nb_eat;
 	int				total_ate;
 	int				dieded;
+	int				end;
 	long long		first_time;
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	forks[250];
@@ -52,7 +53,7 @@ typedef struct s_const_philo
 
 // UTILS
 int					ft_atoi(const char *str);
-long long			get_time_in_ms(void);
+long long			get_time_in_ms(struct timeval time);
 long long			time_diff(long long pres, long long past);
 void 				smart_sleep(long long time, t_const_philo *var);
 void 				print_action(t_const_philo *var, int id, char *string);
