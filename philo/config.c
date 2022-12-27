@@ -71,7 +71,7 @@ int init_all(t_const_philo *var, char **argv)
 	var->time_sleep = ft_atoi(argv[4]);
 	var->total_ate = 0;
 	var->dieded = 0;
-	if (var->num_philo < 1 || var->time_die < 60 || var->time_eat < 60 || var->time_sleep < 60 || var->num_philo > 200)
+	if (var->num_philo < 2 || var->time_die < 0 || var->time_eat < 0 || var->time_sleep < 0 || var->num_philo > 250)
 		return (1);
 	if (argv[5])
 	{

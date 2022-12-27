@@ -53,14 +53,29 @@ void smart_sleep(long long time, t_const_philo *var)
 {
 	long long start;
 
+	start = get_time_in_ms();
 	while (!(var->dieded))
 	{
-		start = get_time_in_ms();
-		if (time_diff(get_time_in_ms(), start) > time)
+		if (time_diff(get_time_in_ms(), start) >= time)
 			break ;
 		usleep(50);
 	}
 }
+
+// void smart_sleep(long long time, t_const_philo *var)
+// {
+// 	long long start;
+// 	long long before;
+
+// 	before = get_time_in_ms();
+// 	while (!(var->dieded))
+// 	{
+// 		start = get_time_in_ms();
+// 		if (time_diff(start, before) >= time)
+// 			break ;
+// 		usleep(50);
+// 	}
+// }
 
 void print_action(t_const_philo *var, int id, char *string)
 {

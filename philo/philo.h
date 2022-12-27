@@ -20,6 +20,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+struct s_const_philo;
+
 typedef struct s_philo
 {
 	int				id;
@@ -42,9 +44,9 @@ typedef struct s_const_philo
 	int				dieded;
 	long long		first_time;
 	pthread_mutex_t	meal_check;
-	pthread_mutex_t	forks[200];
+	pthread_mutex_t	forks[250];
 	pthread_mutex_t	writing;
-	t_philo			philo[200];
+	t_philo			philo[250];
 }					t_const_philo;
 
 
