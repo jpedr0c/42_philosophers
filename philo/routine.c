@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:42:08 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:54:20 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:07:16 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void philo_eats(t_philo *philo)
     pthread_mutex_lock(&(var->forks[philo->right_fork]));
     print_action(var, philo->id, "has taken a fork");
     pthread_mutex_lock(&(var->meal_check));
-    print_action(var, philo->id, "is eating");
     philo->last_meal = get_time_in_ms(time_now);
+    print_action(var, philo->id, "is eating");
     pthread_mutex_unlock(&(var->meal_check));
     smart_sleep(var->time_eat, var);
     (philo->ate)++;
@@ -60,12 +60,19 @@ void exit_routine(t_const_philo *var, t_philo *philo)
 {
     int i;
 
-    i = -1;
-    while (++i < var->num_philo)
+    i = 0;
+    while (i < var->num_philo)
+    {
         pthread_join(philo[i].thread_id, NULL);
-    i = -1;
-    while (++i < var->num_philo)
+        i++;
+    }
+    i = 0;
+    while (i < var->num_philo)
+    {
         pthread_mutex_destroy(&(var->forks[i]));
+        i++;
+    }
+	pthread_mutex_destroy(&var->meal_check);
     pthread_mutex_destroy(&(var->writing));
 }
 
@@ -82,11 +89,11 @@ void death_checker(t_const_philo *var, t_philo *philo)
             pthread_mutex_lock(&(var->meal_check));
             if (time_diff(get_time_in_ms(time_now), philo[i].last_meal) > var->time_die)
             {
+                usleep(100);
                 print_action(var, i, "died");
                 var->dieded = 1;
             }
             pthread_mutex_unlock(&(var->meal_check));
-            usleep(100);
         }
         if (var->dieded)
             break ;
@@ -95,6 +102,7 @@ void death_checker(t_const_philo *var, t_philo *philo)
             i++;
         if (i == var->num_philo)
             var->total_ate = 1;
+        usleep(500);
      }
 }
 

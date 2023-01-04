@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:03:42 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:42:08 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:05:06 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_const_philo
 	int				nb_eat;
 	int				total_ate;
 	int				dieded;
-	int				end;
 	long long		first_time;
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	forks[250];
@@ -58,9 +57,12 @@ long long			time_diff(long long pres, long long past);
 void 				smart_sleep(long long time, t_const_philo *var);
 void 				print_action(t_const_philo *var, int id, char *string);
 
-// CONFIG
+// ERROR
 int	print_error(char *str);
 int manager_error(int error);
+void destroy_mutex(t_const_philo *var);
+
+// CONFIG
 int init_mutex(t_const_philo *var);
 int init_philosophers(t_const_philo *var);
 int init_all(t_const_philo *var, char **argv);

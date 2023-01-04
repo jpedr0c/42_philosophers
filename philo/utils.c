@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:31 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:35:45 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:45:31 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 long long	get_time_in_ms(struct timeval time)
 {
 	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	return ((time.tv_sec * 1000) + time.tv_usec / 1000);
 }
 
 long long	time_diff(long long pres, long long past)

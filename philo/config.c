@@ -6,26 +6,30 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:05:38 by jocardos          #+#    #+#             */
-/*   Updated: 2022/12/22 16:11:06 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:54:00 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	print_error(char *str)
+int	check_arg(char **argv)
 {
-	printf("\e[31mError: \e[0m");
-	printf("\e[31m%s\e[0m\n", str);
-	return (1);
-}
+	int i;
+	int j;
 
-int manager_error(int error)
-{
-	if (error == 1)
-		return (print_error("At least one wrong argument"));
-	if (error == 2)
-		return (print_error("Fatal error when initializing mutex"));
-	return (1);
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if ((argv[i][j] < '0' || argv[i][j] > '9') && j != 0)
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
 
 int init_mutex(t_const_philo *var)
@@ -64,13 +68,14 @@ int init_philosophers(t_const_philo *var)
 
 int init_all(t_const_philo *var, char **argv)
 {
+	if (check_arg(argv))
+		return (print_error("Error in params!"));
 	var->num_philo = ft_atoi(argv[1]);
 	var->time_die = ft_atoi(argv[2]);
 	var->time_eat = ft_atoi(argv[3]);
 	var->time_sleep = ft_atoi(argv[4]);
 	var->total_ate = 0;
 	var->dieded = 0;
-	var->end = 0;
 	if (var->num_philo < 1 || var->time_die < 0 || var->time_eat < 0 || var->time_sleep < 0 || var->num_philo > 200)
 		return (1);
 	if (argv[5])
