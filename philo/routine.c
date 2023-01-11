@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:42:08 by jocardos          #+#    #+#             */
-/*   Updated: 2023/01/04 17:07:16 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:13:31 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 void philo_eats(t_philo *philo)
 {
     t_const_philo *var;
-    struct timeval time_now;
 
     var = philo->var;
     pthread_mutex_lock(&(var->forks[philo->left_fork]));
     print_action(var, philo->id, "has taken a fork");
+    if (philo->left_fork == philo->right_fork)
+    {
+        while (!var->dieded)
+            ;
+        pthread_mutex_unlock(&(var->forks[philo->left_fork]));
+        return ;
+    }
     pthread_mutex_lock(&(var->forks[philo->right_fork]));
     print_action(var, philo->id, "has taken a fork");
     pthread_mutex_lock(&(var->meal_check));
-    philo->last_meal = get_time_in_ms(time_now);
+    philo->last_meal = get_time_in_ms();
     print_action(var, philo->id, "is eating");
     pthread_mutex_unlock(&(var->meal_check));
     smart_sleep(var->time_eat, var);
@@ -79,7 +85,6 @@ void exit_routine(t_const_philo *var, t_philo *philo)
 void death_checker(t_const_philo *var, t_philo *philo)
 {
      int i;
-     struct timeval time_now;
 
      while(!(var->total_ate))
      {
@@ -87,7 +92,7 @@ void death_checker(t_const_philo *var, t_philo *philo)
         while (++i < var->num_philo && !(var->dieded))
         {
             pthread_mutex_lock(&(var->meal_check));
-            if (time_diff(get_time_in_ms(time_now), philo[i].last_meal) > var->time_die)
+            if (time_diff(get_time_in_ms(), philo[i].last_meal) > var->time_die)
             {
                 usleep(100);
                 print_action(var, i, "died");
@@ -110,16 +115,15 @@ int create_routine(t_const_philo *var)
 {
     int i;
     t_philo *philo;
-    struct timeval time_now;
 
     i = 0;
     philo = var->philo;
-    var->first_time = get_time_in_ms(time_now);
+    var->first_time = get_time_in_ms();
     while (i < var->num_philo)
     {
         if (pthread_create(&(philo[i].thread_id), NULL, routine_of_philo, &(philo[i])))
             return (1);
-        philo[i].last_meal = get_time_in_ms(time_now);
+        philo[i].last_meal = get_time_in_ms();
         i++;
     }
     death_checker(var, var->philo);

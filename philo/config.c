@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:05:38 by jocardos          #+#    #+#             */
-/*   Updated: 2023/01/04 15:54:00 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:32:52 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int init_all(t_const_philo *var, char **argv)
 	var->time_sleep = ft_atoi(argv[4]);
 	var->total_ate = 0;
 	var->dieded = 0;
-	if (var->num_philo < 1 || var->time_die < 0 || var->time_eat < 0 || var->time_sleep < 0 || var->num_philo > 200)
+	if (var->num_philo < 1 || var->time_die < 60 || var->time_eat < 60 || var->time_sleep < 60 || var->num_philo > 200)
 		return (1);
 	if (argv[5])
 	{

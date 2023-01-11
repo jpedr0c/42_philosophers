@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:03:42 by jocardos          #+#    #+#             */
-/*   Updated: 2023/01/04 16:05:06 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:55:39 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ typedef struct s_const_philo
 
 // UTILS
 int					ft_atoi(const char *str);
-long long			get_time_in_ms(struct timeval time);
+long long			get_time_in_ms();
 long long			time_diff(long long pres, long long past);
-void 				smart_sleep(long long time, t_const_philo *var);
+void 				smart_sleep(unsigned long time, t_const_philo *var);
 void 				print_action(t_const_philo *var, int id, char *string);
 
 // ERROR

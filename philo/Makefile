@@ -6,7 +6,7 @@
 #    By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/08 11:23:57 by jocardos          #+#    #+#              #
-#    Updated: 2023/01/04 15:56:24 by jocardos         ###   ########.fr        #
+#    Updated: 2023/01/11 11:29:43 by jocardos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,3 +81,7 @@ re:		fclean all
 			@echo -e "\n$(BG_GREEN) => Cleaned and rebuilt everything <= $(SET_COLOR)"
 
 .PHONY:	all start clean fclean re
+
+valgrind: all
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=project.log ./philo 4 310 200 100
+	cat project.log
