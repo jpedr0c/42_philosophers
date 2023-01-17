@@ -6,7 +6,7 @@
 #    By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/08 11:23:57 by jocardos          #+#    #+#              #
-#    Updated: 2023/01/11 11:29:43 by jocardos         ###   ########.fr        #
+#    Updated: 2023/01/17 10:42:37 by jocardos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ clean:
 
 fclean:		clean
 			@$(RM) $(NAME)
+			@$(RM) project.log
 			@echo -e -n "$(MAGENTA)[PHILOSOPHERS]:$(SET_COLOR)$(BLUE) Executable files$(GREEN)  => Cleaned$(SET_COLOR)"
 			@echo -e " 🗑️$(SET_COLOR)"
 
@@ -83,5 +84,17 @@ re:		fclean all
 .PHONY:	all start clean fclean re
 
 valgrind: all
-	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=project.log ./philo 4 310 200 100
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=project.log \
+	./philo 4 310 200 100
+	./philo 1 200 200 200
+	./philo 1 800 200 200
+	./philo 2 800 200 200 7
+	./philo 5 800 200 200 7
+	./philo 5 800 200 200 7
+	./philo 4 410 200 200 7
+	./philo 4 310 200 200
+	./philo 4 310 200 100
+	./philo 4 500 200 2147483647
+	./philo 4 2147483647 200 200 7
+	./philo 4 200 210 200
 	cat project.log

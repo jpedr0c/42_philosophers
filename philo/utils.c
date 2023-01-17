@@ -6,7 +6,7 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:31 by jocardos          #+#    #+#             */
-/*   Updated: 2023/01/11 11:07:17 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:55:19 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	ft_atoi(const char *str)
 	return ((int)(result * signal));
 }
 
-long long	get_time_in_ms()
+long long	get_time_in_ms(void)
 {
-	struct timeval time;
-	
+	struct timeval	time;
+
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + time.tv_usec / 1000);
 }
@@ -49,24 +49,23 @@ long long	time_diff(long long pres, long long past)
 	return (pres - past);
 }
 
-void smart_sleep(unsigned long time, t_const_philo *var)
+void	smart_sleep(long long time, t_const_philo *var)
 {
-	unsigned long start;
-	unsigned long before;
+	long long	start;
+	long long	before;
 
 	before = get_time_in_ms();
 	while (!(var->dieded))
 	{
 		start = get_time_in_ms();
-		if ((start - before) >= time)
+		if (time_diff(start, before) >= time)
 			break ;
 		usleep(50);
 	}
 }
 
-void print_action(t_const_philo *var, int id, char *string)
+void	print_action(t_const_philo *var, int id, char *string)
 {
-
 	pthread_mutex_lock(&(var->writing));
 	if (!(var->dieded))
 	{

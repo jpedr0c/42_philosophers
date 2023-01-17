@@ -6,16 +6,28 @@
 /*   By: jocardos <jocardos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:05:38 by jocardos          #+#    #+#             */
-/*   Updated: 2023/01/11 11:32:52 by jocardos         ###   ########.fr       */
+/*   Updated: 2023/01/17 10:32:39 by jocardos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	check_total_ate(t_const_philo *var, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (var->nb_eat != -1 && i < var->num_philo
+		&& philo[i].ate >= var->nb_eat)
+		i++;
+	if (i == var->num_philo)
+		var->total_ate = 1;
+}
+
 int	check_arg(char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (argv[i])
@@ -32,9 +44,9 @@ int	check_arg(char **argv)
 	return (0);
 }
 
-int init_mutex(t_const_philo *var)
+int	init_mutex(t_const_philo *var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < var->num_philo)
@@ -49,9 +61,9 @@ int init_mutex(t_const_philo *var)
 	return (0);
 }
 
-int init_philosophers(t_const_philo *var)
+int	init_philosophers(t_const_philo *var)
 {
-	int i;
+	int	i;
 
 	i = var->num_philo;
 	while (--i >= 0)
@@ -66,17 +78,18 @@ int init_philosophers(t_const_philo *var)
 	return (0);
 }
 
-int init_all(t_const_philo *var, char **argv)
+int	init_all(t_const_philo *var, char **argv)
 {
 	if (check_arg(argv))
-		return (print_error("Error in params!"));
+		return (1);
 	var->num_philo = ft_atoi(argv[1]);
 	var->time_die = ft_atoi(argv[2]);
 	var->time_eat = ft_atoi(argv[3]);
 	var->time_sleep = ft_atoi(argv[4]);
 	var->total_ate = 0;
 	var->dieded = 0;
-	if (var->num_philo < 1 || var->time_die < 60 || var->time_eat < 60 || var->time_sleep < 60 || var->num_philo > 200)
+	if (var->num_philo < 1 || var->time_die < 60 || var->time_eat < 60
+		|| var->time_sleep < 60 || var->num_philo > 200)
 		return (1);
 	if (argv[5])
 	{
